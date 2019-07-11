@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamCityLogParser", "TeamCityLogParser\TeamCityLogParser.csproj", "{073CB099-B1E4-468B-97F8-61E20AAA7512}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamCityLogParser", "TeamCityLogParser\TeamCityLogParser.csproj", "{073CB099-B1E4-468B-97F8-61E20AAA7512}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamCitylogParser.Test", "TeamCitylogParser.Test\TeamCitylogParser.Test.csproj", "{BB9C2D36-A65F-4BEF-837E-3633F488A815}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamCitylogParser.Test", "TeamCitylogParser.Test\TeamCitylogParser.Test.csproj", "{BB9C2D36-A65F-4BEF-837E-3633F488A815}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{A8EE6F3E-78DE-4247-9867-78A1A3489A10}"
+	ProjectSection(SolutionItems) = preProject
+		Data.txt = Data.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
