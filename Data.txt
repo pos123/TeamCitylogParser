@@ -1,0 +1,89 @@
+
+-- Example lines
+
+[10:54:44] :          [exec] 158>------ Build started: Project: blah, Configuration: Release Win32 ------
+[10:53:29] :          [exec] 44>          blah blah blah
+ 
+[10:53:29] :
+ 
+ -- regex
+ ^((?<matched_line>(?<start>\s*)(?<time>\[\d{2}:\d{2}:\d{2}\])\s*:\s*(?<exec>\[exec]\s)(?<projectid>\d+)>(?<line_data>((?<build_def>(?<build_started>------ Build started: Project: )(?<projectname>.*),(?<configuration_start> Configuration: (?<configuration>.*)))|(?<other_data>.*))))|(?<unmatched_line>(?<other_time>\[\d{2}:\d{2}:\d{2}\].*)|(?<other_no_time>.*)))$
+ 
+ 
+ 
+We are interested in lines between the start of incredibuild and the finish. Start is always
+
+Build Acceleration Console
+
+The ending is either =========== Rebuild All succeeded 0 failed, 326 skipped 
+OR =========== Build succeeded 0 failed, 5 up-to-date, 326 skipped
+
+in between these markers we have the build process. Lines can be of the following
+
+1. project build definition - allows us to identify the project
+2. project line entry
+3. extended line entry for the last project line
+4. all other information is about the solution build status 
+ 
+   
+Design
+
+
+Line Item types
+
+IEntry
+-> GetData
+
+ITerminationEntry : IEntry, ITermination 
+
+
+
+Line item
+- line id
+- whole line data
+- line meta information
+
+Line meta information
+    - type of line
+    - map of name value pairs of data    
+
+LineGroup
+    - name ( project id )
+    - List of line items
+
+
+each line is stored with an id which is the sequential line number
+each line will have an attribute object
+    - type of line item
+        - build start
+        - build termination
+        - project statement
+        - last line
+        - error line
+        - detail line
+        - bin id -> a bin reference
+        
+        
+        
+    - bin
+        - type project, uncategorised, build_status
+        - name - if its a project bin then the name is composed of the project name and configuration
+        - the bin contains a list of lines in order 
+
+
+project bins - can only contain project statement lines, project build status lines
+build status bin - can only contain lines regarding the whole build process build start, build termination, build results
+uncategorised bin - hold all other lines we can add categories later
+
+        
+        
+        
+- Actions
+    1. Get project list
+    2. Get failed projects
+    3. Get failed lines
+    4. Get lines for project
+    5. Is a given project in error                
+    
+-- create an electron app for the UI and use edge to communicate with the dll.    
+ 

@@ -7,11 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamCityLogParser", "TeamCi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamCitylogParser.Test", "TeamCitylogParser.Test\TeamCitylogParser.Test.csproj", "{BB9C2D36-A65F-4BEF-837E-3633F488A815}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{A8EE6F3E-78DE-4247-9867-78A1A3489A10}"
-	ProjectSection(SolutionItems) = preProject
-		Data.txt = Data.txt
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

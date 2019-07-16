@@ -1,13 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TeamCityLogParser
+﻿namespace TeamCityLogParser
 {
-    class Parser
+    public class Parser
     {
-        // Accepts a string of data
-        // entry has line data, line number - attached project 
-        // 
+        private readonly string text;
+
+        public Parser(string text)
+        {
+            this.text = text;
+        }
+
+        public void Run()
+        {
+            var data = new DataService(text);
+            foreach (var line in data.GetNextLine())
+            {
+                // use the extractor to determine the IEntry
+                // store and create the IEntry type in the correct location
+            }
+        }
+        
     }
 }
