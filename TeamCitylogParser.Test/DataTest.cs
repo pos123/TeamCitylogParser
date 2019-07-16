@@ -17,7 +17,7 @@ namespace TeamCityLogParser.Test
             Assert.Equal("two", data.Data(2));
             Assert.Equal(Empty, data.Data(3));
             Assert.Throws<NullReferenceException>(() => { new DataService(null);});
-            Assert.Throws<NullReferenceException>(() => { new DataService(text: Empty);});
+            Assert.Throws<NullReferenceException>(() => { new DataService(Empty);});
         }
     }
 }

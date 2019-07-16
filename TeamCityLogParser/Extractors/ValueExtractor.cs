@@ -29,11 +29,16 @@ namespace TeamCityLogParser.Extractors
                 ? value 
                 : defaultValue;
         }
+        
+        public bool IsMatchSuccess(EntryType entryType, string data)
+        {
+            return Regex.Match(data, GetPattern(entryType), RegexOptions.IgnoreCase).Success;
+        }
 
         private string GetPattern(EntryType entryType)
         {
-            return dictionary.GetDictionary().ContainsKey(entryType.id) 
-                ? dictionary.GetDictionary()[entryType.id] 
+            return dictionary.GetDictionary().ContainsKey(entryType.Id) 
+                ? dictionary.GetDictionary()[entryType.Id] 
                 : Empty;
         }
 

@@ -15,12 +15,12 @@ namespace TeamCityLogParser.components
             this.valueExtractor = valueExtractor;
             this.dataService = dataService;
         }
-
+    
         public EntryType EntryType => entry.EntryType;
         
         public uint LineNumber  => entry.LineNumber;
         
-        public uint ProjectId => 
+        public uint ProjectId =>     
             (uint)valueExtractor.GetValueAsNumber(entry.EntryType, "projectId",
                 dataService.Data(entry.LineNumber), 0);
     }

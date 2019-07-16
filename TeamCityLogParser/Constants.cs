@@ -9,12 +9,9 @@ namespace TeamCityLogParser
         public const uint SolutionEndBuildFailedEntryType = 5;
         public const uint ProjectDefinitionEntryType = 6;
         public const uint ProjectEntryType = 7;
-        public const uint ProjectSummaryType = 8;
-        public const uint ProjectEndBuildFailedType = 9;
-        public const uint ProjectEndBuildSucceededType = 10;
-        public const uint ProjectEnd = 11;
-        public const uint ProjectEmpty = 12;
-        
-        public static readonly string None = @"None";
-    }
+        public const uint ProjectEmptyEntryType = 8;
+        public const uint ProjectEndEntryType = 9;
+        public const uint ProjectEndBuildFailedEntryType = 10;
+        public const uint ProjectEndBuildSucceededEntryType = 11;
+     }
 }
