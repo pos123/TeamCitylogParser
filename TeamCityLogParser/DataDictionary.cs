@@ -13,7 +13,7 @@ namespace TeamCityLogParser
         private const string Comma = @",";
         private const string WhiteSpaceOneOrMore = @"\s+";
         private const string WhiteSpaceOne = @"\s";
-        private const string Time = @"(?<time>\[\d{2}:\d{2}:\d{2}\])";
+        private const string Time = @"\[(?<time>\d{2}:\d{2}:\d{2})\]";
         private const string Colon = @":";
         private const string Exec = @"(?<exec>\[exec])";
         private const string ProjectId = @"(?<projectId>\d+)";

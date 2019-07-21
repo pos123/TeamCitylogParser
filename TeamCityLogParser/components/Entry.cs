@@ -1,3 +1,4 @@
+using System;
 using TeamCityLogParser.interfaces;
 
 namespace TeamCityLogParser.components
@@ -13,6 +14,5 @@ namespace TeamCityLogParser.components
         public EntryType EntryType { get; }
 
         public uint LineNumber { get; }
-       
     }
 }

@@ -5,25 +5,27 @@ namespace TeamCityLogParser
     public class EntryType
     {
         public readonly uint Id;
-
-        private static readonly Dictionary<uint, EntryType> EntryTypes = new Dictionary<uint, EntryType>
+        public readonly uint Priority;
+        
+        public static readonly Dictionary<uint, EntryType> EntryTypes = new Dictionary<uint, EntryType>
         {
-            {Constants.NoiseEntryType, new EntryType(Constants.NoiseEntryType)},
-            {Constants.SolutionStartEntryType, new EntryType(Constants.SolutionStartEntryType)},
-            {Constants.SolutionEndRebuildSucceededEntryType, new EntryType(Constants.SolutionEndRebuildSucceededEntryType)},
-            {Constants.SolutionEndBuildSucceededEntryType, new EntryType(Constants.SolutionEndBuildSucceededEntryType)},
-            {Constants.SolutionEndBuildFailedEntryType, new EntryType(Constants.SolutionEndBuildFailedEntryType)},
-            {Constants.ProjectDefinitionEntryType, new EntryType(Constants.ProjectDefinitionEntryType)},
-            {Constants.ProjectEntryType, new EntryType(Constants.ProjectEntryType)},
-            {Constants.ProjectEmptyEntryType, new EntryType(Constants.ProjectEmptyEntryType)},
-            {Constants.ProjectEndEntryType, new EntryType(Constants.ProjectEndEntryType)},
-            {Constants.ProjectEndBuildFailedEntryType, new EntryType(Constants.ProjectEndBuildFailedEntryType)},
-            {Constants.ProjectEndBuildSucceededEntryType, new EntryType(Constants.ProjectEndBuildSucceededEntryType)}
+            {Constants.NoiseEntryType, new EntryType(Constants.NoiseEntryType, 3)},
+            {Constants.SolutionStartEntryType, new EntryType(Constants.SolutionStartEntryType, 1)},
+            {Constants.SolutionEndRebuildSucceededEntryType, new EntryType(Constants.SolutionEndRebuildSucceededEntryType, 1)},
+            {Constants.SolutionEndBuildSucceededEntryType, new EntryType(Constants.SolutionEndBuildSucceededEntryType, 1)},
+            {Constants.SolutionEndBuildFailedEntryType, new EntryType(Constants.SolutionEndBuildFailedEntryType, 1)},
+            {Constants.ProjectDefinitionEntryType, new EntryType(Constants.ProjectDefinitionEntryType, 1)},
+            {Constants.ProjectEntryType, new EntryType(Constants.ProjectEntryType, 2)},
+            {Constants.ProjectEmptyEntryType, new EntryType(Constants.ProjectEmptyEntryType, 1)},
+            {Constants.ProjectEndEntryType, new EntryType(Constants.ProjectEndEntryType, 1)},
+            {Constants.ProjectEndBuildFailedEntryType, new EntryType(Constants.ProjectEndBuildFailedEntryType, 1)},
+            {Constants.ProjectEndBuildSucceededEntryType, new EntryType(Constants.ProjectEndBuildSucceededEntryType, 1)}
         };
         
-        private EntryType(uint id)
+        private EntryType(uint id, uint priority)
         {
             Id = id;
+            Priority = priority;
         }
         
         public static EntryType Noise()  { return EntryTypes[Constants.NoiseEntryType]; }

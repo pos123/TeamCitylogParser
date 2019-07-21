@@ -1,15 +1,17 @@
+using System;
+using System.Globalization;
 using TeamCityLogParser.Extractors;
 using TeamCityLogParser.interfaces;
 
 namespace TeamCityLogParser.components
 {
-    public class SolutionEndBuildBuildFailed : ISolutionEndBuildFailed
+    public class SolutionEndBuildBuildFailedEntry : ISolutionEndBuildFailedEntry
     {
         private readonly IEntry entry;
         private readonly IValueExtractor valueExtractor;
         private readonly IDataService dataService;
 
-        public SolutionEndBuildBuildFailed(IEntry entry, IValueExtractor valueExtractor, IDataService dataService)
+        public SolutionEndBuildBuildFailedEntry(IEntry entry, IValueExtractor valueExtractor, IDataService dataService)
         {
             this.entry = entry;
             this.valueExtractor = valueExtractor;
@@ -20,6 +22,10 @@ namespace TeamCityLogParser.components
         
         public uint LineNumber => entry.LineNumber;
         
+        public TimeSpan Time =>
+            valueExtractor.GetValueAsTimeSpan(entry.EntryType, "time", @"hh\:mm\:ss",
+                dataService.Data(entry.LineNumber), TimeSpan.Zero);
+
         public uint NonFatalErrors =>
             (uint)valueExtractor.GetValueAsNumber(entry.EntryType, "buildFailedNonFatalErrors",
                 dataService.Data(entry.LineNumber), 0);

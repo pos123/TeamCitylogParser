@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using TeamCityLogParser.Extractors;
 using TeamCityLogParser.interfaces;
 
@@ -19,7 +21,11 @@ namespace TeamCityLogParser.components
         public EntryType EntryType => entry.EntryType;
         
         public uint LineNumber  => entry.LineNumber;
-        
+
+        public TimeSpan Time =>
+            valueExtractor.GetValueAsTimeSpan(entry.EntryType, "time", @"hh\:mm\:ss",
+                dataService.Data(entry.LineNumber), TimeSpan.Zero);
+            
         public string Name =>
             valueExtractor.GetValueAsString(entry.EntryType, "projectName",
                 dataService.Data(entry.LineNumber), string.Empty);

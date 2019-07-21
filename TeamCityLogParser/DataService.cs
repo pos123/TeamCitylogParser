@@ -25,11 +25,12 @@ namespace TeamCityLogParser
             return data.Count >= lineNumber ? data[(int) (lineNumber - 1)] : Empty;
         }
 
-        public IEnumerable<string> GetNextLine()
+        public IEnumerable<Tuple<uint,string>> Data()
         {
+            uint lineNumber = 0;
             foreach (var line in data)
             {
-                yield return line;
+                yield return Tuple.Create(++lineNumber, line);
             }
         }
     }

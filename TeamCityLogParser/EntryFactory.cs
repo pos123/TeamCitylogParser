@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.CompilerServices;
 using TeamCityLogParser.components;
 using TeamCityLogParser.Extractors;
 using TeamCityLogParser.interfaces;
@@ -6,54 +8,64 @@ namespace TeamCityLogParser
 {
     public static class EntryFactory
     {
-        public static IProjectDefinitionEntry CreateProjectDefinitionEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<Entry> CreateNewEntryFunc(uint lineNumber, EntryType entryType)
         {
-            return new ProjectDefinitionEntry(new Entry(EntryType.ProjectDefinition(), lineNumber), valueExtractor, dataService);
+            return () => new Entry(entryType, lineNumber);
         }
         
-        public static ISolutionStartEntry CreateSolutionStartEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, INoiseEntry> CreateNoiseEntryFunc(uint lineNumber)
         {
-            return new SolutionStartEntry(new Entry(EntryType.SolutionStart(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new NoiseEntry(new Entry(EntryType.Noise(), lineNumber), extractor, data);
         }
         
-        public static ISolutionEndBuildSucceededEntry CreateSolutionEndBuildSucceededEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, IProjectDefinitionEntry> CreateProjectDefinitionEntryFunc(uint lineNumber) 
         {
-            return new SolutionEndBuildSucceededEntry(new Entry(EntryType.SolutionEndBuildSucceeded(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new ProjectDefinitionEntry(new Entry(EntryType.ProjectDefinition(), lineNumber), extractor, data);
         }
         
-        public static ISolutionEndRebuildSucceededEntry CreateSolutionEndRebuildSucceededEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, ISolutionStartEntry> CreateSolutionStartEntryFunc(uint lineNumber) 
         {
-            return new SolutionEndRebuildSucceededEntry(new Entry(EntryType.SolutionEndRebuildSucceeded(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new SolutionStartEntry(new Entry(EntryType.SolutionStart(), lineNumber), extractor, data);
         }
         
-        public static ISolutionEndBuildFailed CreateSolutionEndBuildFailedEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, ISolutionEndBuildSucceededEntry> CreateSolutionEndBuildSucceededEntryFunc(uint lineNumber) 
         {
-            return new SolutionEndBuildBuildFailed(new Entry(EntryType.SolutionEndBuildFailed(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new SolutionEndBuildSucceededEntry(new Entry(EntryType.SolutionEndBuildSucceeded(), lineNumber), extractor, data);
         }
         
-        public static IProjectEntry CreateProjectEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, ISolutionEndRebuildSucceededEntry> CreateSolutionEndRebuildSucceededEntryFunc(uint lineNumber) 
         {
-            return new ProjectEntry(new Entry(EntryType.ProjectEntry(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new SolutionEndRebuildSucceededEntry(new Entry(EntryType.SolutionEndRebuildSucceeded(), lineNumber), extractor, data);
         }
         
-        public static IProjectEmptyEntry CreateProjectEmptyEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, ISolutionEndBuildFailedEntry> CreateSolutionEndBuildFailedEntryFunc(uint lineNumber) 
         {
-            return new ProjectEmptyEntry(new Entry(EntryType.ProjectEmptyEntry(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new SolutionEndBuildBuildFailedEntry(new Entry(EntryType.SolutionEndBuildFailed(), lineNumber), extractor, data);
         }
         
-        public static IProjectEndEntry CreateProjectEndEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, IProjectEntry> CreateProjectEntryFunc(uint lineNumber) 
         {
-            return new ProjectEndEntry(new Entry(EntryType.ProjectEndEntry(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new ProjectEntry(new Entry(EntryType.ProjectEntry(), lineNumber), extractor, data);
         }
         
-        public static IProjectEndBuildFailedEntry CreateProjectEndBuildFailedEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, IProjectEmptyEntry> CreateProjectEmptyEntryFunc(uint lineNumber) 
         {
-            return new ProjectEndBuildFailedEntry(new Entry(EntryType.ProjectBuildFailedEntry(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new ProjectEmptyEntry(new Entry(EntryType.ProjectEmptyEntry(), lineNumber), extractor, data);
         }
         
-        public static IProjectEndBuildSucceededEntry CreateProjectEndBuildSucceededEntry(uint lineNumber, IValueExtractor valueExtractor, IDataService dataService) 
+        public static Func<IValueExtractor, IDataService, IProjectEndEntry> CreateProjectEndEntryFunc(uint lineNumber) 
         {
-            return new ProjectEndBuildSucceededEntry(new Entry(EntryType.ProjectBuildSucceededEntry(), lineNumber), valueExtractor, dataService);
+            return (extractor, data) => new ProjectEndEntry(new Entry(EntryType.ProjectEndEntry(), lineNumber), extractor, data);
+        }
+        
+        public static Func<IValueExtractor, IDataService, IProjectEndBuildFailedEntry> CreateProjectEndBuildFailedEntryFunc(uint lineNumber) 
+        {
+            return (extractor, data) => new ProjectEndBuildFailedEntry(new Entry(EntryType.ProjectBuildFailedEntry(), lineNumber), extractor, data);
+        }    
+        
+        public static Func<IValueExtractor, IDataService, IProjectEndBuildSucceededEntry> CreateProjectEndBuildSucceededEntryFunc(uint lineNumber) 
+        {
+            return (extractor, data) => new ProjectEndBuildSucceededEntry(new Entry(EntryType.ProjectBuildSucceededEntry(), lineNumber), extractor, data);
         }
     }
 }

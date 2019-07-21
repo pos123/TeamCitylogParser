@@ -1,23 +1,54 @@
-﻿namespace TeamCityLogParser
+﻿using System;
+using System.Linq;
+using TeamCityLogParser.Extractors;
+using TeamCityLogParser.interfaces;
+
+namespace TeamCityLogParser
 {
     public class Parser
     {
-        private readonly string text;
-
-        public Parser(string text)
+        private readonly IDataService dataService;
+        private readonly IValueExtractor valueExtractor;
+        
+        public Parser(string data)
         {
-            this.text = text;
+            dataService = new DataService(data);
+            valueExtractor = new ValueExtractor(new DataDictionary());
         }
 
         public void Run()
         {
-            var data = new DataService(text);
-            foreach (var line in data.GetNextLine())
+            var noiseEntries = dataService.Data().MapCalcEntryTypeFunc(valueExtractor)
+                                     .FilterEntryDefinitionTypeFunc<INoiseEntry>(EntryFactory.CreateNoiseEntryFunc, EntryType.Noise())
+                                     .EvaluateToList<INoiseEntry>(valueExtractor, dataService);
+
+            var solutionStart = dataService.Data().MapCalcEntryTypeFunc(valueExtractor)
+                                    .FilterEntryDefinitionTypeFunc<ISolutionStartEntry>(EntryFactory.CreateSolutionStartEntryFunc, EntryType.SolutionStart())
+                                    .EvaluateToList<ISolutionStartEntry>(valueExtractor, dataService);
+ 
+            var projectDefinitions = dataService.Data().MapCalcEntryTypeFunc(valueExtractor)
+                .FilterEntryDefinitionTypeFunc<IProjectDefinitionEntry>(EntryFactory.CreateProjectDefinitionEntryFunc, EntryType.ProjectDefinition())
+                .EvaluateToList<IProjectDefinitionEntry>(valueExtractor, dataService);
+            
+            
+            
+            foreach (var result in solutionStart.AsParallel())
             {
-                // use the extractor to determine the IEntry
-                // store and create the IEntry type in the correct location
+                ISolutionStartEntry x = result;
+                var entryType = x.EntryType;
+                var lineNum = x.LineNumber;
+                Console.WriteLine($"{entryType.Id} {lineNum} {x.SolutionStart}");
             }
+            
+            foreach (var result in noiseEntries.AsParallel().AsOrdered())
+            {
+                INoiseEntry x = result;
+                var entryType = x.EntryType;
+                var lineNum = x.LineNumber;
+                Console.WriteLine($"{entryType.Id} {lineNum}");
+            }
+            
+            //FilterEntryDefinitionTypeFunc
         }
-        
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using TeamCityLogParser.interfaces;
 using static System.String;
@@ -29,7 +30,17 @@ namespace TeamCityLogParser.Extractors
                 ? value 
                 : defaultValue;
         }
-        
+
+        public TimeSpan GetValueAsTimeSpan(EntryType entryType, string label, string format, string sourceData, TimeSpan defaultValue)
+        {
+            var result = GetValue(entryType, label, sourceData);
+            if (!result.Item1) return defaultValue;                    
+            TimeSpan value;
+            return TimeSpan.TryParseExact(result.Item2, format, CultureInfo.InvariantCulture, out value) 
+                ? value 
+                : defaultValue;
+        }
+
         public bool IsMatchSuccess(EntryType entryType, string data)
         {
             return Regex.Match(data, GetPattern(entryType), RegexOptions.IgnoreCase).Success;

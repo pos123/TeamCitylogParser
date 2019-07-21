@@ -1,8 +1,11 @@
+using System;
+
 namespace TeamCityLogParser.interfaces
 {
     public interface IProjectEndEntry : IEntry
     {
         uint Id { get; }
-        string TimeElapsed { get; }
+        TimeSpan TimeElapsed { get; }
+        TimeSpan Time { get; }
     }
 }
