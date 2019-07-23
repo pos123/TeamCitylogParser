@@ -7,5 +7,6 @@ namespace TeamCityLogParser.interfaces
         uint ProjectId { get; }
         string Data { get; }
         TimeSpan Time { get; }
+        bool HasErrors { get; }
     }
 }

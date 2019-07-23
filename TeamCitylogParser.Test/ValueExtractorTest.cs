@@ -82,14 +82,14 @@ namespace TeamCityLogParser.Test
         [Fact]
         public void GivenRegexProjectEntry_ShouldExtractProjectEntryDefinition()
         {
-            var dataService = new DataService(" [10:53:29] :            [exec] 44>blah blah blah");
+            var dataService = new DataService(" [10:53:29] :            [exec] 44>  blah blah blah");
             var dataDictionary = new DataDictionary();
             var valueExtractor = new ValueExtractor(dataDictionary);
             var projectEntry = EntryFactory.CreateProjectEntryFunc(1)(valueExtractor, dataService);
 
             Assert.Equal(EntryType.ProjectEntry(), projectEntry.EntryType);
             Assert.Equal((uint)44, projectEntry.ProjectId);
-            Assert.Equal("blah blah blah", projectEntry.Data);
+            Assert.Equal("  blah blah blah", projectEntry.Data);
             Assert.Equal(new TimeSpan(10, 53, 29), projectEntry.Time);
         }
         

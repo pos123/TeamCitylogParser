@@ -33,7 +33,9 @@ namespace TeamCityLogParser.components
         
         public string Data =>
             valueExtractor.GetValueAsString(entry.EntryType, "projectLineData",
-                dataService.Data(entry.LineNumber), Empty).Trim();
+                dataService.Data(entry.LineNumber), Empty);
 
+        public bool HasErrors =>
+            Data.Contains(" errors ") || Data.Contains(" error ");
     }
 }
