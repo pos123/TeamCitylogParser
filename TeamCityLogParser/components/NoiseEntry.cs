@@ -1,5 +1,3 @@
-using System;
-using System.Globalization;
 using TeamCityLogParser.Extractors;
 using TeamCityLogParser.interfaces;
 

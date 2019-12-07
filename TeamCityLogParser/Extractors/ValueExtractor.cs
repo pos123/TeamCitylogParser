@@ -36,7 +36,7 @@ namespace TeamCityLogParser.Extractors
             var result = GetValue(entryType, label, sourceData);
             if (!result.Item1) return defaultValue;                    
             TimeSpan value;
-            return TimeSpan.TryParseExact(result.Item2, format, CultureInfo.InvariantCulture, out value) 
+            return TimeSpan.TryParseExact(result.Item2, format, CultureInfo.InvariantCulture, out value)
                 ? value 
                 : defaultValue;
         }

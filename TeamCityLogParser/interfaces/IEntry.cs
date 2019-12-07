@@ -1,5 +1,3 @@
-using System;
-
 namespace TeamCityLogParser.interfaces
 {
     public interface IEntry

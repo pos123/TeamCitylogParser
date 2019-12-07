@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using TeamCityLogParser.Extractors;
 using Xunit;
-using Xunit.Abstractions;
-using Xunit.Sdk;
 
 
 namespace TeamCityLogParser.Test

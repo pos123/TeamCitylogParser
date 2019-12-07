@@ -17,7 +17,7 @@ namespace TeamCityLogParser
                 throw new NullReferenceException("supplied data cannot be empty or null");
             }
             
-            data = text.Split(Convert.ToChar(Environment.NewLine)).ToList();
+            data = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
         }
 
         public string Data(uint lineNumber)

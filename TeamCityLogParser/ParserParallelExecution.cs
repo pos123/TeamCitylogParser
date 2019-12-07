@@ -6,7 +6,6 @@ namespace TeamCityLogParser
 {
     public class ParserParallelExecution
     {
-        private readonly Parser parser;
         private readonly Task[] taskList;
         public List<INoiseEntry> Noise;
         public ISolutionStartEntry SolutionStart;
@@ -22,7 +21,6 @@ namespace TeamCityLogParser
 
         public ParserParallelExecution(Parser parser)
         {
-            this.parser = parser;
             taskList = new Task[]
             {
                 new Task(() => { Noise = parser.Noise; }),

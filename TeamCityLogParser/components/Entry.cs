@@ -1,4 +1,3 @@
-using System;
 using TeamCityLogParser.interfaces;
 
 namespace TeamCityLogParser.components
