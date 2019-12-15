@@ -18,7 +18,7 @@ namespace TeamCityLogParser
         private const string Exec = @"(?<exec>\[exec])";
         private const string ProjectId = @"(?<projectId>\d+)";
         private const string Arrow = @">";
-        private const string ProjectBuildStarted = @"Build started: Project: ";
+        private const string ProjectBuildStarted = @"(Build started|Rebuild All started): ";
         private const string ProjectConfiguration = @"(?<projectConfiguration>.+(?=(\s-)))";
         private const string ProjectName = @"(?<projectName>.*)";
         private const string AnyZeroOrMore = @".*";
@@ -47,7 +47,6 @@ namespace TeamCityLogParser
             // Project definition
             // [10:54:44] :          [exec] 158>------ Build started: Project: blah x x x, Configuration: Release Win32 ------
             definitionMap[EntryType.ProjectDefinition().Id] = LineStart + 
-                                                              WhiteSpaceOne + 
                                                               Time + 
                                                               WhiteSpaceOne + 
                                                               Colon + 
@@ -74,7 +73,6 @@ namespace TeamCityLogParser
             // Solution start
             // [10:54:44] :          [exec] Build Acceleration Console 8.0.1 (build 1867)
             definitionMap[EntryType.SolutionStart().Id] = LineStart + 
-                                                           WhiteSpaceOne + 
                                                            Time + 
                                                            WhiteSpaceOne + 
                                                            Colon + 
@@ -86,7 +84,6 @@ namespace TeamCityLogParser
             // Solution end build succeeded
             // [10:54:44] :          [exec] ========== Build: 35 succeeded, 0 failed, 5 up-to-date, 326 skipped ==========  
             definitionMap[EntryType.SolutionEndBuildSucceeded().Id] = LineStart + 
-                                                                       WhiteSpaceOne + 
                                                                        Time + 
                                                                        WhiteSpaceOne + 
                                                                        Colon + 
@@ -116,7 +113,6 @@ namespace TeamCityLogParser
             // Solution end rebuild all succeeded 
             // [10:54:44] :          [exec] ========== Rebuild All: 35 succeeded, 0 failed, 326 skipped ==========
             definitionMap[EntryType.SolutionEndRebuildSucceeded().Id] = LineStart + 
-                                                                        WhiteSpaceOne + 
                                                                         Time + 
                                                                         WhiteSpaceOne + 
                                                                         Colon + 
@@ -142,7 +138,6 @@ namespace TeamCityLogParser
             // Solution end failed
             // [10:54:44]W:          [NAnt output] BUILD FAILED - 8 non-fatal error(s), 15 warning(s)    
             definitionMap[EntryType.SolutionEndBuildFailed().Id] = LineStart + 
-                                                                   WhiteSpaceOne +
                                                                    Time +
                                                                    WOne +
                                                                    Colon +
@@ -160,7 +155,6 @@ namespace TeamCityLogParser
             // Project entry type
             // [10:53:29] :            [exec] 44> blah blah blah
             definitionMap[EntryType.ProjectEntry().Id] =  LineStart +
-                                                          WhiteSpaceOne +
                                                           Time +
                                                           WhiteSpaceOne +
                                                           Colon +
@@ -175,7 +169,6 @@ namespace TeamCityLogParser
             // Project entry empty type
             // [10:53:29] :            [exec] 44>
             definitionMap[EntryType.ProjectEmptyEntry().Id] = LineStart +
-                                                              WhiteSpaceOne +
                                                               Time +
                                                               WhiteSpaceOne +
                                                               Colon +
@@ -189,7 +182,6 @@ namespace TeamCityLogParser
             // Project end entry
             // [19:07:17] :          [exec] 54>Time Elapsed 00:00:14.56
             definitionMap[EntryType.ProjectEndEntry().Id] = LineStart +
-                                                               WhiteSpaceOne +
                                                                Time +
                                                                WhiteSpaceOne +
                                                                Colon +
@@ -204,7 +196,6 @@ namespace TeamCityLogParser
             // Project build failed
             // [19:07:17] :       [exec] 27>Build FAILED.
             definitionMap[EntryType.ProjectBuildFailedEntry().Id] = LineStart +
-                                                                     WhiteSpaceOne +
                                                                      Time +
                                                                      WhiteSpaceOne +
                                                                      Colon +
@@ -219,7 +210,6 @@ namespace TeamCityLogParser
             // Project build succeeded
             // [19:07:17] :       [exec] 27>Build succeeded.
             definitionMap[EntryType.ProjectBuildSucceededEntry().Id] = LineStart +
-                                                                     WhiteSpaceOne +
                                                                      Time +
                                                                      WhiteSpaceOne +
                                                                      Colon +
