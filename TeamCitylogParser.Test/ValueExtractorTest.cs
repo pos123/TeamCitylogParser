@@ -149,4 +149,3 @@ namespace TeamCityLogParser.Test
         }
     }
 }
-s
