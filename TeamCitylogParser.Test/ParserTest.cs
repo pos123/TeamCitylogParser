@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using TeamCityLogParser.Extractors;
@@ -45,15 +46,27 @@ namespace TeamCityLogParser.Test
         [Fact]
         public async Task GivenTestFileName_ShouldParseAllEntryItems()
         {
+            var sync = new object();
+            
             var watch = new Stopwatch();
             watch.Start();
             
             var valueExtractor = new ValueExtractor(new DataDictionary());
             var dataService = new DataService(TestUtils.GetTestFileContents("test_1.txt"));
             var parser = new Parser(dataService, valueExtractor);
-            
-            var parserParallelExecution = new ParserParallelExecution(parser);
+
+            var entryTypes = new List<uint>();
+
+            var parserParallelExecution = new ParserParallelExecution(parser, (entryType) =>
+            {
+                lock (sync)
+                {
+                    entryTypes.Add(entryType);
+                }
+            });
             await parserParallelExecution.Run();
+
+            entryTypes.Sort();
         }
 
 
