@@ -19,6 +19,7 @@ namespace TeamCityLogParser
         private const string ProjectId = @"(?<projectId>\d+)";
         private const string Arrow = @">";
         private const string ProjectBuildStarted = @"(Build started|Rebuild All started): ";
+        private const string Project = @"Project: ";
         private const string ProjectConfiguration = @"(?<projectConfiguration>.+(?=(\s-)))";
         private const string ProjectName = @"(?<projectName>.*)";
         private const string AnyZeroOrMore = @".*";
@@ -58,6 +59,7 @@ namespace TeamCityLogParser
                                                               DashesOneOrMore +
                                                               WhiteSpaceOne +
                                                               ProjectBuildStarted +
+                                                              Project +
                                                               ProjectName +
                                                               AnyZeroOrMore +
                                                               Comma + 

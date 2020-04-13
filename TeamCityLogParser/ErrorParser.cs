@@ -30,7 +30,8 @@ namespace TeamCityLogParser
         
         public static string GetCategory(string data)
         {
-            foreach (var errorParser in from errorParser in vcErrors let match = errorParser.Value.Match(data) where match.Success select errorParser)
+            foreach (var errorParser in from errorParser in vcErrors 
+                        let match = errorParser.Value.Match(data) where match.Success select errorParser)
             {
                 return errorParser.Key;
             }

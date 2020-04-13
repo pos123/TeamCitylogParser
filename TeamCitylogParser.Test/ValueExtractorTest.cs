@@ -16,6 +16,7 @@ namespace TeamCityLogParser.Test
             var projectDefinitionEntry = EntryFactory.CreateProjectDefinitionEntryFunc(1)(valueExtractor, dataService);
             
             Assert.Equal((uint)158, projectDefinitionEntry.Id);
+            Assert.Equal("StarWinForms x x x", projectDefinitionEntry.Name);
             Assert.Equal(EntryType.ProjectDefinition(), projectDefinitionEntry.EntryType);
             Assert.Equal("Release Win32", projectDefinitionEntry.Configuration);
             Assert.Equal(new TimeSpan(10, 54, 44), projectDefinitionEntry.Time );
