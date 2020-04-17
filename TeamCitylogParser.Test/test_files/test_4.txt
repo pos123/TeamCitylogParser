@@ -1,0 +1,6 @@
+﻿[19:07:17]W: Step 1/4: Svn Update
+[11:57:05] :         [Step 1/4] Disabled build step this is the Svn Update skipped
+[19:07:17]W: Step 2/4: Verify Packages
+[19:07:17] :    [Step 2/4] Process exited with code 0
+[19:07:17]W: Step 3/4: Nant
+[19:07:17] :    [Step 3/4] Process exited with code 0

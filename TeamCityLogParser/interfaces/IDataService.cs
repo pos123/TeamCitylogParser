@@ -7,5 +7,6 @@ namespace TeamCityLogParser.interfaces
     {
         string Data(uint lineNumber);
         IEnumerable<Tuple<uint, string>> Data();
+        IEnumerable<Tuple<uint, string>> FilteredData(uint start, uint end);
     }
 }

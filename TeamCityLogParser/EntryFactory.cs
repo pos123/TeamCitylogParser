@@ -37,11 +37,6 @@ namespace TeamCityLogParser
             return (extractor, data) => new SolutionEndRebuildSucceededEntry(new Entry(EntryType.SolutionEndRebuildSucceeded(), lineNumber), extractor, data);
         }
         
-        public static Func<IValueExtractor, IDataService, ISolutionEndBuildFailedEntry> CreateSolutionEndBuildFailedEntryFunc(uint lineNumber) 
-        {
-            return (extractor, data) => new SolutionEndBuildBuildFailedEntry(new Entry(EntryType.SolutionEndBuildFailed(), lineNumber), extractor, data);
-        }
-        
         public static Func<IValueExtractor, IDataService, IProjectEntry> CreateProjectEntryFunc(uint lineNumber) 
         {
             return (extractor, data) => new ProjectEntry(new Entry(EntryType.ProjectEntry(), lineNumber), extractor, data);
@@ -65,6 +60,26 @@ namespace TeamCityLogParser
         public static Func<IValueExtractor, IDataService, IProjectEndBuildSucceededEntry> CreateProjectEndBuildSucceededEntryFunc(uint lineNumber) 
         {
             return (extractor, data) => new ProjectEndBuildSucceededEntry(new Entry(EntryType.ProjectBuildSucceededEntry(), lineNumber), extractor, data);
+        }
+
+        public static Func<IValueExtractor, IDataService, IStageStartType> CreateStageStartEntryFunc(uint lineNumber)
+        {
+            return (extractor, data) => new StageStartEntry(new Entry(EntryType.StageStartType(), lineNumber), extractor, data);
+        }
+
+        public static Func<IValueExtractor, IDataService, IStageExitType> CreateStageExitEntryFunc(uint lineNumber)
+        {
+            return (extractor, data) => new StageExitEntry(new Entry(EntryType.StageExitType(), lineNumber), extractor, data);
+        }
+
+        public static Func<IValueExtractor, IDataService, IStageSkippedType> CreateStageSkippedEntryFunc(uint lineNumber)
+        {
+            return (extractor, data) => new StageSkippedEntry(new Entry(EntryType.StageSkippedType(), lineNumber), extractor, data);
+        }
+
+        public static Func<IValueExtractor, IDataService, IDefaultErrorEntry> CreateDefaultErrorEntryFunc(uint lineNumber)
+        {
+            return (extractor, data) => new DefaultErrorEntry(new Entry(EntryType.DefaultErrorEntryType, lineNumber), extractor, data);
         }
     }
 }

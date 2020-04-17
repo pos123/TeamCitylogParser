@@ -67,20 +67,6 @@ namespace TeamCityLogParser.Test
         }
         
         [Fact]
-        public void GivenRegexSolutionEndBuildFailed_ShouldExtractSolutionEndBuildFailedDefinition()
-        {
-            var dataService = new DataService("[10:54:44]W:          [NAnt output] BUILD FAILED - 8 non-fatal error(s), 15 warning(s)");
-            var dataDictionary = new DataDictionary();
-            var valueExtractor = new ValueExtractor(dataDictionary);
-            var solutionEndBuildFailed = EntryFactory.CreateSolutionEndBuildFailedEntryFunc(1)(valueExtractor, dataService);
-
-            Assert.Equal(EntryType.SolutionEndBuildFailed(), solutionEndBuildFailed.EntryType);
-            Assert.Equal((uint)8, solutionEndBuildFailed.NonFatalErrors);
-            Assert.Equal((uint)15, solutionEndBuildFailed.Warnings);
-            Assert.Equal(new TimeSpan(10, 54, 44), solutionEndBuildFailed.Time);
-        }
-        
-        [Fact]
         public void GivenRegexProjectEntry_ShouldExtractProjectEntryDefinition()
         {
             var dataService = new DataService("[10:53:29] :            [exec] 44>  blah blah blah");
@@ -148,5 +134,60 @@ namespace TeamCityLogParser.Test
             Assert.Equal("Build succeeded.", projectEndBuildSucceeded.BuildSucceeded);
             Assert.Equal(new TimeSpan(19, 07, 17), projectEndBuildSucceeded.Time);
         }
+
+        [Fact]
+        public void GivenRegexStageStartEntry_ShouldExtractStageStartEntryDetails()
+        {
+            var dataService = new DataService("[19:07:17]W: Step 1/4: Clean up");
+            var dataDictionary = new DataDictionary();
+            var valueExtractor = new ValueExtractor(dataDictionary);
+            var stageStart = EntryFactory.CreateStageStartEntryFunc(1)(valueExtractor, dataService);
+
+            Assert.Equal(EntryType.StageStartType(), stageStart.EntryType);
+            Assert.Equal((uint)1, stageStart.StageNo);
+            Assert.Equal((uint)4, stageStart.StageCount);
+            Assert.Equal("Clean up", stageStart.StageLabel);
+        }
+
+        [Fact]
+        public void GivenRegexStageExitEntry_ShouldExtractStageExitEntryDetails()
+        {
+            var dataService = new DataService("[19:07:17] :    [Step 4/4] Process exited with code 0");
+            var dataDictionary = new DataDictionary();
+            var valueExtractor = new ValueExtractor(dataDictionary);
+            var stageExit = EntryFactory.CreateStageExitEntryFunc(1)(valueExtractor, dataService);
+
+            Assert.Equal(EntryType.StageExitType(), stageExit.EntryType);
+            Assert.Equal((uint)4, stageExit.StageNo);
+            Assert.Equal((uint)4, stageExit.StageCount);
+            Assert.True(stageExit.Succeeded);
+        }
+
+        [Fact]
+        public void GivenRegexStageSkippedEntry_ShouldExtractStageSkippedEntryDetails()
+        {
+            var dataService = new DataService("[11:57:05] : [Step 1/6] Disabled build step this is Label  (here) is skipped");
+            var dataDictionary = new DataDictionary();
+            var valueExtractor = new ValueExtractor(dataDictionary);
+            var stageSkipped = EntryFactory.CreateStageSkippedEntryFunc(1)(valueExtractor, dataService);
+
+            Assert.Equal(EntryType.StageSkippedType(), stageSkipped.EntryType);
+            Assert.Equal((uint)1, stageSkipped.StageNo);
+            Assert.Equal((uint)6, stageSkipped.StageCount);
+            Assert.Equal("this is Label  (here)", stageSkipped.Label);
+        }
+
+        [Fact]
+        public void GivenRegexDefaultErrorEntry_ShouldExtractDefaultErrorEntryDetails()
+        {
+            var dataService = new DataService("[11:57:05] : [Step 1/6] error: so here is an thing error");
+            var dataDictionary = new DataDictionary();
+            var valueExtractor = new ValueExtractor(dataDictionary);
+            var defaultError = EntryFactory.CreateDefaultErrorEntryFunc(1)(valueExtractor, dataService);
+
+            Assert.Equal(EntryType.DefaultErrorEntry(), defaultError.EntryType);
+            Assert.Equal(" so here is an thing error", defaultError.Error);
+        }
+
     }
 }

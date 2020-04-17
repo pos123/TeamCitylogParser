@@ -25,7 +25,6 @@ namespace TeamCityLogParser
         private const string AnyZeroOrMore = @".*";
         private const string Configuration = @"Configuration";
         private const string DashesOneOrMore = @"-+";
-        private const string DashesOne = @"-";
         private const string BuildAccelerationConsole = @"(?<buildAccelerationConsole>Build Acceleration Console) .+";
         private const string Equals10 = @"={10}";
         private const string Build = @"Build";
@@ -34,15 +33,22 @@ namespace TeamCityLogParser
         private const string BuildFailed = @"(?<buildFailed>\d+)\sfailed";
         private const string BuildUpToDate = @"(?<upToDate>\d+)\sup-to-date";
         private const string BuildSkipped = @"(?<buildSkipped>\d+)\sskipped";
-        private const string WOne = @"W";
-        private const string NantBuildFailed = @"\[NAnt output\] BUILD FAILED";
-        private const string NonFatalErrors = @"(?<buildFailedNonFatalErrors>\d+)\snon-fatal error\(s\)";
-        private const string BuildFailedWarnings = @"(?<buildFailedWarnings>\d+)\swarning\(s\)";
+        private const string AnySingleCharacter = @".";
         private const string ProjectLineData = @"(?<projectLineData>.+)";
         private const string TimeElapsed = @"Time Elapsed (?<timeElapsed>\d\d:\d\d:\d\d.\d\d)";
         private const string ProjectBuildFailed = @"(?<buildFailed>Build FAILED.)";
         private const string ProjectBuildSucceeded = @"(?<buildSucceeded>Build succeeded.)";
-        
+        private const string StageData = @"Step (?<start>[0-9])/(?<end>[0-9])";
+        private const string StageLabel = @"(?<stageLabel>.+)";
+        private const string OpenSquareBracket = @"\[";
+        private const string CloseSquareBracket = @"\]";
+        private const string StageExitCode = @"Process exited with code (?<exitCode>0|1)";
+        private const string StageSkippedData = @"Disabled build step (?<label>.*) is skipped";
+        private const string AnyNumberOfCharactersNotError = @"((?!error).)*";
+        private const string Error = @"error[\s|:](?<error>.*)";
+
+        // ((?!error).)*error[\s|:](?<error>.*)
+
         public DataDictionary()
         {    
             // Project definition
@@ -137,23 +143,6 @@ namespace TeamCityLogParser
                                                                         Equals10 +  
                                                                         LineEnd;   
             
-            // Solution end failed
-            // [10:54:44]W:          [NAnt output] BUILD FAILED - 8 non-fatal error(s), 15 warning(s)    
-            definitionMap[EntryType.SolutionEndBuildFailed().Id] = LineStart + 
-                                                                   Time +
-                                                                   WOne +
-                                                                   Colon +
-                                                                   WhiteSpaceOneOrMore +
-                                                                   NantBuildFailed +
-                                                                   WhiteSpaceOne +
-                                                                   DashesOne +
-                                                                   WhiteSpaceOne +
-                                                                   NonFatalErrors + 
-                                                                   Comma +
-                                                                   WhiteSpaceOne +
-                                                                   BuildFailedWarnings +     
-                                                                   LineEnd;
-            
             // Project entry type
             // [10:53:29] :            [exec] 44> blah blah blah
             definitionMap[EntryType.ProjectEntry().Id] =  LineStart +
@@ -222,8 +211,59 @@ namespace TeamCityLogParser
                                                                      Arrow +
                                                                      ProjectBuildSucceeded +              
                                                                      LineEnd;
-            
-            
+
+
+            // Stage start
+            // [19:07:17]W: Step 1/4: Clean up
+            definitionMap[EntryType.StageStartType().Id] = LineStart +
+                                                           Time +
+                                                           AnySingleCharacter +
+                                                           Colon +
+                                                           WhiteSpaceOne +
+                                                           StageData +
+                                                           Colon +
+                                                           WhiteSpaceOne +
+                                                           StageLabel;
+
+
+            // Stage exit
+            // [19:07:17] :    [Step 4/4] Process exited with code 0
+            definitionMap[EntryType.StageExitType().Id] = LineStart +
+                                                          Time +
+                                                          AnySingleCharacter +
+                                                          Colon +
+                                                          WhiteSpaceOneOrMore +
+                                                          OpenSquareBracket +
+                                                          StageData +
+                                                          CloseSquareBracket +
+                                                          WhiteSpaceOne +
+                                                          StageExitCode;
+
+            // Stage skipped
+            // [11:57:05] :         [Step 1/6] Disabled build step this is the label (here) skipped
+            definitionMap[EntryType.StageSkippedType().Id] = LineStart +
+                                                             Time +
+                                                             AnySingleCharacter +
+                                                             Colon +
+                                                             WhiteSpaceOneOrMore +
+                                                             OpenSquareBracket +
+                                                             StageData +
+                                                             CloseSquareBracket +
+                                                             WhiteSpaceOne +
+                                                             StageSkippedData;
+
+            // Default error
+            // [11:57:05] :         [Step 1/6] stuff error more stuff
+            definitionMap[EntryType.DefaultErrorEntry().Id] = LineStart +
+                                                              Time +
+                                                              AnySingleCharacter +
+                                                              Colon +
+                                                              WhiteSpaceOneOrMore +
+                                                              OpenSquareBracket +
+                                                              StageData +
+                                                              CloseSquareBracket +
+                                                              AnyNumberOfCharactersNotError +
+                                                              Error;
         }
 
         public Dictionary<uint, string> GetDictionary()

@@ -33,5 +33,23 @@ namespace TeamCityLogParser
                 yield return Tuple.Create(++lineNumber, line);
             }
         }
+
+        public IEnumerable<Tuple<uint, string>> FilteredData(uint start, uint end)
+        {
+            uint lineNumber = 0;
+            foreach (var line in data)
+            {
+                ++lineNumber;
+                if (lineNumber >= start && lineNumber <= end)
+                {
+                    yield return Tuple.Create(lineNumber, line);
+                }
+
+                if (lineNumber > end)
+                {
+                    yield break;
+                }
+            }
+        }
     }
 }

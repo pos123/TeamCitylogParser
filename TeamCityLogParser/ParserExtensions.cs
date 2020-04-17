@@ -11,14 +11,14 @@ namespace TeamCityLogParser
     {
         public static IEnumerable<Func<Tuple<uint,EntryType>>> MapCalcEntryTypeFunc(
             this IEnumerable<Tuple<uint, string>> source, 
-            IValueExtractor valueExtractor)
+            IValueExtractor valueExtractor, Dictionary<uint, EntryType> entryTypes)
         {
             foreach (var (item1, item2) in source)
             {
                 yield return () =>
                 {
                     var candidates = new List<Tuple<uint, EntryType>> {Tuple.Create(item1, EntryType.Noise())};
-                    foreach (var pair in EntryType.EntryTypes)
+                    foreach (var pair in entryTypes)
                     {
                         if (valueExtractor.IsMatchSuccess(pair.Value, item2))
                         {

@@ -1,0 +1,4 @@
+﻿[19:07:17]W: Step 2/4: Verify Packages
+[19:07:17] :    [Step 2/4]  blah blak error: MSB4057: the target
+[19:07:17] :    [Step 2/4]  1 Error(s)
+[20:07:17] :    [Step 2/4] Process exited with code 1

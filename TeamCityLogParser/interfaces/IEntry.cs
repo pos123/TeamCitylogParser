@@ -4,6 +4,5 @@ namespace TeamCityLogParser.interfaces
     {
         EntryType EntryType { get; }
         uint LineNumber { get; }
-       
     }
 }
