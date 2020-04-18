@@ -1,0 +1,124 @@
+﻿[19:07:17]W: Step 3/4: Nant
+[08:00:25] :    [exec] Build Acceleration Console 8.0.1 (build 1867)
+[10:54:44] :    [exec] 158>------ Build started: Project: StarBusObj, Configuration: Release Win32 ------
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> error : D:\Documents\Source\repos\LongFactorials\LongFactorials\LongFactorials.cpp(11,31): error C2039: 'en': is not a member of 'std'
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> error : D:\Documents\Source\repos\LongFactorials\LongFactorials\LongFactorials.cpp(11,31): error C2039: 'en': is not a member of 'std'
+[10:53:29] :    [exec] 158> error : D:\Documents\Source\repos\LongFactorials\LongFactorials\LongFactorials.cpp(11,31): error C2039: 'en': is not a member of 'std'
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> ok
+[10:53:29] :    [exec] 158> error : D:\Documents\Source\repos\LongFactorials\LongFactorials\LongFactorials.cpp(11,31): error C2039: 'en': is not a member of 'std'
+[10:53:29] :    [exec] 158> error : D:\Documents\Source\repos\LongFactorials\LongFactorials\LongFactorials.cpp(11,31): error C2039: 'en': is not a member of 'std'
+[10:53:29] :    [exec] 158> ok
+[19:07:17] :    [exec] 158>Build FAILED.
+[10:54:44] :    [exec] 159>------ Build started: Project: StarIrdDeals, Configuration: Release Win32 ------
+[10:53:29] :    [exec] 159> error : blah blah blah
+[10:53:29] :    [exec] 159> error : blah blah blah
+[10:53:29] :    [exec] 159> error : blah blah blah
+[10:53:29] :    [exec] 159> error : blah blah blah
+[19:07:17] :    [exec] 159>Build FAILED.
+[10:54:44] :    [exec] 151>------ Build started: Project: StarUtils, Configuration: Release Win32 ------
+[10:53:29] :    [exec] 151> error : blah blah blah
+[10:53:29] :    [exec] 151> error : blah blah blah
+[10:53:29] :    [exec] 151> error : blah blah blah
+[10:53:29] :    [exec] 151> error : blah blah blah
+[19:07:17] :    [exec] 151>Build FAILED.
+[10:54:44]W:    [NAnt output] BUILD FAILED - 8 non-fatal error(s), 15 warning(s)
+[19:07:17] :    [Step 3/4] Process exited with code 1

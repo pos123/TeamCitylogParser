@@ -36,7 +36,7 @@ namespace TeamCityLogParser.Parsers
         public async Task Parse(Action<string> notification)
         {
             IdentifyStages(notification);
-
+         
             foreach (var stage in StageGroups.OrderBy(x => x.GroupStageNo))
             {
                 if (stage.IsStageFailure || stage.StageGroupType == StageGroupType.CodeBuild)

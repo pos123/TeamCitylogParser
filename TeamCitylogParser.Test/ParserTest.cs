@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using TeamCityLogParser.Extractors;
 using TeamCityLogParser.Parsers;
@@ -169,9 +170,20 @@ namespace TeamCityLogParser.Test
             Assert.True(message == "no known build stages found in log");
             Assert.False(success);
         }
+
+        [Fact]
+        public async Task GivenBuildCodePayload_ShouldParseCorrectly()
+        {
+            var logParser = new BuildLogParser(TestUtils.GetTestFileContents("test_6.txt"));
+            await logParser.Parse((notification) => { });
+
+            Assert.True(logParser.StageGroups.Count == 1);
+            var (success, message) = logParser.GetStatement();
+            Assert.True(message == "Solution build failed: 3 failed project(s), 13 error instance(s)");
+            Assert.False(success);
+
+            var codeResults = logParser.CodeResults;
+            Assert.True(codeResults.GetFailedProjectList().Count() == 3);
+        }
     }
-
-
-
-
 }

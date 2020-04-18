@@ -31,7 +31,7 @@ namespace TeamCityLogParser.Parsers
 
         public Tuple<bool, string> GetStatement()
         {
-             return new Tuple<bool, string>(false, $"{Errors.Count} error entries(s) found");
+            return new Tuple<bool, string>(false, $"{Errors.Count} error entries(s) found");
         }
 
         private List<IDefaultErrorEntry> DefaultErrorEntries(uint start, uint end) =>
