@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamCityLogParser.Parsers;
 
 namespace TeamCityLogParser.interfaces
 {
@@ -11,5 +12,8 @@ namespace TeamCityLogParser.interfaces
         List<Tuple<uint, string, string, string, string>> GetBuildErrorsOutput();
         IEnumerable<Tuple<uint, string>> GetProjectData(uint projectId);
         string GetSortedProjectData();
+        List<ProjectLineError> GetProjectLineErrors();
+        List<IProjectDefinitionEntry> GetProjectDefinitions();
+        List<IProjectEntry> GetProjectEntries();
     }
 }

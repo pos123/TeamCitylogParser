@@ -102,7 +102,7 @@ namespace TeamCityLogParser.Test
             Assert.True(logParser.StageGroups[0].StageLineRange.Item2 == 2);
 
             var (success, message) = logParser.GetStatement();
-            Assert.True(message == "0 error entries(s) found");
+            Assert.True(message == "0 error entries(s) found in stage - SVN Update");
             Assert.False(success);
         }
 
@@ -146,7 +146,7 @@ namespace TeamCityLogParser.Test
             Assert.True(logParser.StageGroups[0].StageGroupType == StageGroupType.VerifyPackages);
 
             var (success, message) = logParser.GetStatement();
-            Assert.True(message == "1 error entries(s) found");
+            Assert.True(message == "1 error entries(s) found in stage - Verify Packages");
             Assert.False(success);
 
             var results = logParser.VerifyPackageResults;
@@ -167,7 +167,7 @@ namespace TeamCityLogParser.Test
 
             Assert.True(logParser.StageGroups.Count == 0);
             var (success, message) = logParser.GetStatement();
-            Assert.True(message == "no known build stages found in log");
+            Assert.True(message == "No known build stages found in log");
             Assert.False(success);
         }
 

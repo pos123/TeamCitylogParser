@@ -10,13 +10,15 @@ namespace TeamCityLogParser.Parsers
 {
     public class DefaultStageParser : IStageParser, IDefaultStageParserResult
     {
+        private readonly StageGroupType stageGroupType;
         private readonly IDataService dataService;
         private readonly IValueExtractor valueExtractor;
 
         public List<IDefaultErrorEntry> Errors { get; private set; }
 
-        public DefaultStageParser(IDataService dataService, IValueExtractor valueExtractor)
+        public DefaultStageParser(StageGroupType stageGroupType, IDataService dataService, IValueExtractor valueExtractor)
         {
+            this.stageGroupType = stageGroupType;
             this.dataService = dataService;
             this.valueExtractor = valueExtractor;
         }
@@ -31,7 +33,13 @@ namespace TeamCityLogParser.Parsers
 
         public Tuple<bool, string> GetStatement()
         {
-            return new Tuple<bool, string>(false, $"{Errors.Count} error entries(s) found");
+            var description = stageGroupType == StageGroupType.VerifyPackages ? "Verify Packages" : "SVN Update";
+            return new Tuple<bool, string>(false, $"{Errors.Count} error entries(s) found in stage - {description}");
+        }
+
+        public int GetErrorCount()
+        {
+            return Errors.Count;
         }
 
         private List<IDefaultErrorEntry> DefaultErrorEntries(uint start, uint end) =>

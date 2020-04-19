@@ -42,7 +42,7 @@ namespace TeamCityLogParser.Parsers
             {
                 ProjectLineErrors = new List<ProjectLineError>();
 
-                var taskList = new Task[]
+                var taskList = new[]
                 {
                     new Task(() => { Noise = GetNoise(start, end); }),
                     new Task(() => { SolutionStart = GetSolutionStart(start, end); }),
@@ -156,6 +156,16 @@ namespace TeamCityLogParser.Parsers
             }
             return builder.ToString();
         }
+
+        public int GetErrorCount()
+        {
+            return GetBuildErrorsOutput().Count;
+        }
+
+        public List<ProjectLineError> GetProjectLineErrors() => ProjectLineErrors;
+        public List<IProjectDefinitionEntry> GetProjectDefinitions() => ProjectDefinitions;
+        public List<IProjectEntry> GetProjectEntries() => ProjectEntries;
+
 
         private List<INoiseEntry> GetNoise(uint start, uint end) =>
             dataService.FilteredData(start, end).MapCalcEntryTypeFunc(valueExtractor, EntryType.CodeBuildParserEntryTypes)

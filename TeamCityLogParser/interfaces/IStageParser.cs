@@ -9,5 +9,6 @@ namespace TeamCityLogParser.interfaces
     {
         Task Parse(uint lineStart, uint lineEnd, Action<string> notification);
         Tuple<bool, string> GetStatement();
+        int GetErrorCount();
     }
 }

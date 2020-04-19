@@ -27,8 +27,8 @@ namespace TeamCityLogParser.Parsers
 
             stageParsers = new Dictionary<StageGroupType, IStageParser>()
             {
-                { StageGroupType.SvnUpdate, new DefaultStageParser(dataService, valueExtractor) },
-                { StageGroupType.VerifyPackages, new DefaultStageParser(dataService, valueExtractor) },
+                { StageGroupType.SvnUpdate, new DefaultStageParser(StageGroupType.SvnUpdate, dataService, valueExtractor) },
+                { StageGroupType.VerifyPackages, new DefaultStageParser(StageGroupType.VerifyPackages, dataService, valueExtractor) },
                 { StageGroupType.CodeBuild, new CodeParser(dataService, valueExtractor) }
             };
         }
@@ -51,7 +51,7 @@ namespace TeamCityLogParser.Parsers
         {
             if (!StageGroups.Any())
             {
-                return Tuple.Create(false, "no known build stages found in log");
+                return Tuple.Create(false, "No known build stages found in log");
             }
 
             var failedStage = StageGroups.OrderBy(x => x.GroupStageNo).FirstOrDefault(x => x.IsStageFailure);
@@ -66,12 +66,40 @@ namespace TeamCityLogParser.Parsers
                 return stageParsers[lastStageProcessed.StageGroupType].GetStatement();
             }
 
-            return Tuple.Create(false, "unable to provide build log parse statement");
+            return Tuple.Create(false, "Unable to provide build log parse statement");
         }
 
         public TimeSpan? GetStageTimeTaken(StageGroupType stage)
         {
             return StageGroups.FirstOrDefault(x => x.StageGroupType == stage)?.StageTime;
+        }
+
+        public TimeSpan? GetLastStageTimeTaken()
+        {
+            return StageGroups?.OrderByDescending(x => x.GroupStageNo).FirstOrDefault()?.StageTime;
+        }
+
+        public int GetLastStageErrorCount()
+        {
+            var failedStage = StageGroups?.Where(x => x.IsStageFailure).OrderByDescending(x => x.GroupStageNo).FirstOrDefault();
+            return failedStage != null ? stageParsers[failedStage.StageGroupType].GetErrorCount() : 0;
+        }
+
+        public bool HasFailedStages()
+        {
+            return StageGroups.Count > 0  && StageGroups.Where(x => x.IsStageFailure).OrderByDescending(x => x.GroupStageNo).Any();
+        }
+
+        public StageGroupType GetLastFailedStageGroupType()
+        {
+            return HasFailedStages()
+                ? StageGroups.Where(x => x.IsStageFailure).OrderByDescending(x => x.GroupStageNo).First().StageGroupType
+                : StageGroupType.Unknown;
+        }
+
+        public bool IsCodeBuildCompleted()
+        {
+            return StageGroups.FirstOrDefault(x => x.StageGroupType == StageGroupType.CodeBuild) != null;
         }
 
         private void IdentifyStages(Action<string> notification)
