@@ -71,18 +71,33 @@ namespace TeamCityLogParser.Parsers
                 await Task.Delay(500);
 
                 // identify errors into groups
-                notification("starting error identification ...");
+                notification("starting identification or errors ...");
                 await Task.Delay(500);
 
-                foreach (var entry in ProjectBuildFailedEntries.SelectMany(failedProject =>
-                    ProjectEntries.Where(x => x.ProjectId == failedProject.Id && !string.IsNullOrEmpty(x.ErrorType))))
+                var i = 0;
+                var totalProjectEntries = ProjectEntries.Count;
+                var setProjectFailedProjectIDs = new HashSet<uint>(ProjectBuildFailedEntries.Select(x => x.Id));
+                foreach (var entry in ProjectEntries)
                 {
-                    ProjectLineErrors.Add(new ProjectLineError()
+                    if (setProjectFailedProjectIDs.Contains(entry.ProjectId))
                     {
-                        ProjectEntry = entry,
-                        Error = entry.ErrorType
-                    });
+                        var entryErrorType = entry.ErrorType;
+                        if (!string.IsNullOrEmpty(entryErrorType))
+                        {
+                            ProjectLineErrors.Add(new ProjectLineError()
+                            {
+                                ProjectEntry = entry,
+                                Error = entry.ErrorType
+                            });
+                        }
+                    }
+
+                    if (++i % 50 == 0)
+                    {
+                        notification($"starting identification of errors ... {++i} / {totalProjectEntries} entries processed");
+                    }
                 }
+
 
                 notification("finished error identification ...");
                 await Task.Delay(500);

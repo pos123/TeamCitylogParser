@@ -174,7 +174,7 @@ namespace TeamCityLogParser.Test
         [Fact]
         public async Task GivenBuildCodePayload_ShouldParseCorrectly()
         {
-            var logParser = new BuildLogParser(TestUtils.GetTestFileContents("test_6.txt"));
+            var logParser = new BuildLogParser(TestUtils.GetTestFileContents("test_7.txt"));
             await logParser.Parse((notification) => { });
 
             Assert.True(logParser.StageGroups.Count == 1);
