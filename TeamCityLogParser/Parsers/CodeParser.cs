@@ -71,7 +71,7 @@ namespace TeamCityLogParser.Parsers
                 await Task.Delay(500);
 
                 // identify errors into groups
-                notification("starting identification or errors ...");
+                notification("starting identification of errors ...");
                 await Task.Delay(500);
 
                 var i = 0;
