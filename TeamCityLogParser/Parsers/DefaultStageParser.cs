@@ -34,7 +34,8 @@ namespace TeamCityLogParser.Parsers
         public Tuple<bool, string> GetStatement()
         {
             var description = stageGroupType == StageGroupType.VerifyPackages ? "Verify Packages" : "SVN Update";
-            return new Tuple<bool, string>(false, $"{Errors.Count} error entries(s) found in stage - {description}");
+            return Errors.Count == 0 ? new Tuple<bool, string>(false, $"Check log file for errors in stage - {description}") 
+                                     : new Tuple<bool, string>(false, $"{Errors.Count} error entries(s) found in stage - {description}");
         }
 
         public int GetErrorCount()
