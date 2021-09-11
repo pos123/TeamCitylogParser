@@ -8,4 +8,4 @@ namespace TeamCityLogParser.interfaces
         string BuildSucceeded { get; }
         TimeSpan Time { get; }
     }
-}
+} 

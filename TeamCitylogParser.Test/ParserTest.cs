@@ -102,7 +102,7 @@ namespace TeamCityLogParser.Test
             Assert.True(logParser.StageGroups[0].StageLineRange.Item2 == 2);
 
             var (success, message) = logParser.GetStatement();
-            Assert.True(message == "0 error entries(s) found in stage - SVN Update");
+            Assert.True(message == "Check log file for errors in stage - SVN Update");
             Assert.False(success);
         }
 
@@ -179,11 +179,11 @@ namespace TeamCityLogParser.Test
 
             Assert.True(logParser.StageGroups.Count == 1);
             var (success, message) = logParser.GetStatement();
-            Assert.True(message == "Solution build failed: 3 failed project(s), 13 error instance(s)");
+            Assert.True(message == "Solution build failed: 256 failed project(s), 512 error instance(s)");
             Assert.False(success);
 
             var codeResults = logParser.CodeResults;
-            Assert.True(codeResults.GetFailedProjectList().Count() == 3);
+            Assert.True(codeResults.GetFailedProjectList().Count() == 2);
         }
     }
 }
