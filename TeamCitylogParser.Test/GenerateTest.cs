@@ -26,26 +26,24 @@ namespace TeamCitylogParser.Test
 
             var fileName = DateTime.Now.ToString("yyyy_dd_MMM_H_mm_ss") + ".log";
 
-            using (var file = new StreamWriter(Path.Combine(testDirectory, fileName)))
+            using var file = new StreamWriter(Path.Combine(testDirectory, fileName));
+            file.WriteLine("[00:00:00]W: Step 1/2: Nant");
+            for (var i = 0; i < projectCount; ++i)
             {
-                file.WriteLine("[00:00:00]W: Step 1/2: Nant");
-                for (var i = 0; i < projectCount; ++i)
+                file.WriteLine($"[01:00:00] :    [exec] {i + 1}>------ Build started: Project: {projectBaseLabel}_{i + 1}, Configuration: Release Win32 ------");
+                for (var j = 0; j < errorsPerProject; ++j)
                 {
-                    file.WriteLine($"[01:00:00] :    [exec] {i+1}>------ Build started: Project: {projectBaseLabel}_{i + 1}, Configuration: Release Win32 ------");
-                    for (var j = 0; j < errorsPerProject; ++j)
-                    {
-                        file.WriteLine($"[01:00:01] :    [exec] {i+1}> error : D:\\Documents\\Source\\repos\\LongFactorials: error C2039: 'en': is not a member of 'std' ");
-                    }
-
-                    for (var j = 0; j < goodLinesPerProject; ++j)
-                    {
-                        file.WriteLine($"[01:00:01] :    [exec] {i + 1}> compiling file_{j+1}.cpp");
-                    }
-
-                    file.WriteLine($"[01:00:00] :    [exec] {i + 1}>Build FAILED.");
+                    file.WriteLine($"[01:00:01] :    [exec] {i + 1}> error : D:\\Documents\\Source\\repos\\LongFactorials: error C2039: 'en': is not a member of 'std' ");
                 }
-                file.WriteLine("[10:10:10] :    [Step 1/2] Process exited with code 1");
+
+                for (var j = 0; j < goodLinesPerProject; ++j)
+                {
+                    file.WriteLine($"[01:00:01] :    [exec] {i + 1}> compiling file_{j + 1}.cpp");
+                }
+
+                file.WriteLine($"[01:00:00] :    [exec] {i + 1}>Build FAILED.");
             }
+            file.WriteLine("[10:10:10] :    [Step 1/2] Process exited with code 1");
         }
     }
 }
